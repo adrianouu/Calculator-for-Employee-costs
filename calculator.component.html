@@ -1,0 +1,1019 @@
+<link rel="stylesheet" href="calculator.component.css" />
+
+<div
+  style="
+    padding-top: 50px;
+    background-color: #f5f5f5;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+  "
+>
+  <label
+    style="
+      text-align: center;
+      margin-left: 10px;
+      margin-right: 10px;
+      display: flex;
+      justify-content: center;
+      font-size: 44px;
+      font-weight: bold;
+      line-height: 1.5em;
+      color: rgb(96, 94, 94);
+    "
+  >
+    Rechner für Fluktuations- und Krankheitskosten
+  </label>
+  <label
+    style="
+      text-align: center;
+      margin-bottom: 40px;
+      margin-left: 10px;
+      margin-right: 10px;
+      display: flex;
+      justify-content: center;
+      font-size: 44px;
+      font-weight: bold;
+      line-height: 1.5em;
+      color: rgb(252, 137, 114);
+    "
+    >kibun.io</label
+  >
+
+  <!--<div style="align-items: center; display: flex; justify-content: center">
+    <mat-card style="width: 550px">
+      <div
+        style="
+          width: 100%;
+          height: 0.8rem;
+          border-radius: 2px 2px 0px 0px;
+          background-color: rgb(252, 137, 114);
+        "
+      ></div>
+
+      <div style="text-align: center">
+        <div style="margin-bottom: 17px"></div>
+        <div style="display: flex; justify-content: center">
+          <p
+            style="
+              text-transform: uppercase;
+              text-align: center;
+              font-weight: 600;
+              font-size: 1.475rem;
+              margin-top: 5px;
+              color: rgb(252, 137, 114);
+            "
+          >
+            RETURN ON INVESTMENT MIT KIBUN
+          </p>
+          <img
+            src="../../assets/kibun_icon.png"
+            style="height: 30px; margin-left: 7px"
+          />
+        </div>
+        <div style="margin-bottom: 30px"></div>
+
+        <div style="margin-bottom: 15px">
+          <span
+            style="
+              font-size: 35px;
+
+              color: rgb(96, 94, 94);
+              font-weight: bold;
+            "
+          >
+            {{
+              savingIllnessAndEmployeeReplacementAmount !== undefined
+                ? "+" + savingIllnessAndEmployeeReplacementAmount + "€"
+                : "---"
+            }}
+          </span>
+          <span style="font-weight: 999">/Jahr</span>
+          <span
+            [ngClass]="{
+              'green-roi': potentialRoi !== undefined && potentialRoi >= 0,
+              'red-roi': potentialRoi !== undefined && potentialRoi < 0
+            }"
+            style="
+              font-size: 18px;
+              display: flex;
+              justify-content: center;
+
+              margin-left: 45px;
+              display: flex;
+              margin-top: 15px;
+              font-weight: 600;
+            "
+          >
+            {{
+              potentialRoi !== undefined
+                ? (potentialRoi >= 0 ? "+" : "") + potentialRoi + "%"
+                : ""
+            }}
+          </span>
+        </div>
+
+        <div
+          style="
+            width: 100%;
+            height: 8rem;
+            border-radius: 2px 2px 0px 0px;
+            background-color: rgb(252, 137, 114);
+          "
+        >
+          <div style="display: flex; margin-top: 20px; margin-bottom: 15px">
+            <label class="white-title">Kibunlizenz pro Jahr</label>
+
+            <span class="white-title"> {{ kibunLizenzProJahr + "€" }}</span>
+            <span
+              style="
+                margin-left: 15px;
+
+                margin-top: 40px;
+                color: white;
+              "
+              >/Jahr</span
+            >
+          </div>
+
+          <div
+            style="
+              margin-left: 45px;
+              margin-right: 45px;
+              margin-top: 10px;
+              height: 5px;
+              border-radius: 2px 2px 0px 0px;
+              background-color: rgb(248, 248, 248);
+            "
+          ></div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div
+    style="
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      margin-top: 95px;
+    "
+  >-->
+  <div style="align-items: center; display: flex; justify-content: center">
+    <mat-card style="width: 850px; height: 850px">
+      <div
+        style="
+          width: 100%;
+          height: 0.8rem;
+          border-radius: 2px 2px 0px 0px;
+          background-color: rgb(252, 137, 114);
+        "
+      ></div>
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          margin-top: 30px;
+          margin-left: 50px;
+          align-items: baseline;
+        "
+      >
+        <div style="width: 80%">
+          <p style="font-weight: 500; font-size: 1.275rem">
+            1. Wie viele Mitarbeiter hat Ihr Unternehmen?
+          </p>
+        </div>
+        <div style="width: 25%">
+          <input
+            style="
+              width: 100px;
+              border-radius: 35px;
+              height: 35px;
+              text-align: center;
+              background-color: rgb(252, 137, 114);
+              font-size: 20px;
+              font-weight: bold;
+              padding: 5px;
+              border: 2px solid #555;
+            "
+            type="number"
+            [(ngModel)]="anzahlArbeiter"
+            (input)="callAllMethods()"
+          />
+        </div>
+      </div>
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          margin-top: 30px;
+          margin-left: 50px;
+          align-items: baseline;
+        "
+      >
+        <div style="width: 80%">
+          <p style="font-weight: 500; font-size: 1.275rem">
+            2. Wie hoch ist das Gehalt eines Mitarbeiters?
+          </p>
+        </div>
+        <div style="width: 25%">
+          <div
+            style="
+              width: 100px;
+              border-radius: 35px;
+              height: 35px;
+              text-align: center;
+              background-color: rgb(252, 137, 114);
+              font-size: 20px;
+              font-weight: bold;
+              padding: 5px;
+              border: 2px solid #555;
+            "
+          >
+            <input
+              style="
+                width: 70px;
+                border: none;
+                height: 35px;
+                text-align: center;
+                background-color: rgb(252, 137, 114);
+                font-size: 20px;
+                font-weight: bold;
+              "
+              type="number"
+              [(ngModel)]="gehaltProMa"
+              (input)="callAllMethods()"
+              [defaultValue]="defaultGehaltProMa"
+            />€
+          </div>
+        </div>
+      </div>
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          margin-top: 30px;
+          margin-left: 50px;
+          align-items: baseline;
+        "
+      >
+        <div style="width: 80%">
+          <p style="font-weight: 500; font-size: 1.275rem">
+            3. Wie viel verdienen Sie pro Mitarbeiter?
+          </p>
+        </div>
+        <div style="width: 25%">
+          <div
+            style="
+              width: 100px;
+              border-radius: 35px;
+              height: 35px;
+              text-align: center;
+              background-color: rgb(252, 137, 114);
+              font-size: 20px;
+              font-weight: bold;
+              padding: 5px;
+              border: 2px solid #555;
+            "
+          >
+            <input
+              style="
+                width: 70px;
+                border: none;
+                height: 35px;
+                text-align: center;
+                background-color: rgb(252, 137, 114);
+                font-size: 20px;
+                font-weight: bold;
+              "
+              type="number"
+              [(ngModel)]="gewinnProMa"
+              (input)="callAllMethods()"
+              [defaultValue]="defaultGewinnProMa"
+            />€
+          </div>
+        </div>
+      </div>
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          margin-top: 30px;
+          margin-left: 50px;
+          align-items: baseline;
+        "
+      >
+        <div style="width: 80%">
+          <p style="font-weight: 500; font-size: 1.275rem">
+            4. Wie viele Krankheitstage im Jahr pro Mitarbeiter?
+          </p>
+        </div>
+        <div style="width: 25%">
+          <input
+            style="
+              width: 100px;
+              border-radius: 35px;
+              height: 35px;
+              text-align: center;
+              background-color: rgb(252, 137, 114);
+              font-size: 20px;
+              font-weight: bold;
+              padding: 5px;
+              border: 2px solid #555;
+            "
+            type="number"
+            [(ngModel)]="krankheitstageProMA"
+            (input)="callAllMethods()"
+            [defaultValue]="defaultKrankheitstageProMA"
+          />
+        </div>
+      </div>
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          margin-top: 30px;
+          margin-left: 50px;
+          align-items: baseline;
+        "
+      >
+        <div style="width: 80%">
+          <p style="font-weight: 500; font-size: 1.275rem">
+            5. Wie viele Abgänge gab es im letzten Jahr?
+          </p>
+        </div>
+        <div style="width: 25%">
+          <input
+            style="
+              width: 100px;
+              border-radius: 35px;
+              height: 35px;
+              text-align: center;
+              background-color: rgb(252, 137, 114);
+              font-size: 20px;
+              font-weight: bold;
+              padding: 5px;
+              border: 2px solid #555;
+            "
+            type="number"
+            [(ngModel)]="abgaengeLetztesJahr"
+            (input)="callAllMethods()"
+            [defaultValue]="defaultAbgaengeLetztesJahr"
+          />
+        </div>
+      </div>
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          margin-top: 30px;
+          margin-left: 50px;
+          align-items: baseline;
+        "
+      >
+        <div style="width: 80%">
+          <p style="font-weight: 500; font-size: 1.275rem">
+            6. Wie viele Arbeitstage gibt es pro Monat?
+          </p>
+        </div>
+        <div style="width: 25%">
+          <input
+            style="
+              width: 100px;
+              border-radius: 35px;
+              height: 35px;
+              text-align: center;
+              background-color: rgb(252, 137, 114);
+              font-size: 20px;
+              font-weight: bold;
+              padding: 5px;
+              border: 2px solid #555;
+            "
+            type="number"
+            [(ngModel)]="arbeitstageProMonat"
+            (input)="callAllMethods()"
+            [defaultValue]="defaultArbeitstageProMonat"
+          />
+        </div>
+      </div>
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          margin-top: 30px;
+          margin-left: 50px;
+          align-items: baseline;
+        "
+      >
+        <div style="width: 80%">
+          <p style="font-weight: 500; font-size: 1.275rem">
+            7. Vorankündigung der Kündigung in Monaten:
+          </p>
+        </div>
+        <div style="width: 25%">
+          <input
+            style="
+              width: 100px;
+              border-radius: 35px;
+              height: 35px;
+              text-align: center;
+              background-color: rgb(252, 137, 114);
+              font-size: 20px;
+              font-weight: bold;
+              padding: 5px;
+              border: 2px solid #555;
+            "
+            type="number"
+            [(ngModel)]="ankuendigungKuendigungMonate"
+            (input)="callAllMethods()"
+            [defaultValue]="defaultAnkuendigungKuendigungMonate"
+          />
+        </div>
+      </div>
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          margin-top: 30px;
+          margin-left: 50px;
+          align-items: baseline;
+        "
+      >
+        <div style="width: 80%">
+          <p style="font-weight: 500; font-size: 1.275rem">
+            8. Wiederbesetzung der Arbeitsstelle in Monaten:
+          </p>
+        </div>
+        <div style="width: 25%">
+          <input
+            style="
+              width: 100px;
+              border-radius: 35px;
+              height: 35px;
+              text-align: center;
+              background-color: rgb(252, 137, 114);
+              font-size: 20px;
+              font-weight: bold;
+              padding: 5px;
+              border: 2px solid #555;
+            "
+            type="number"
+            [(ngModel)]="wiederbesetzungMonate"
+            (input)="callAllMethods()"
+            [defaultValue]="defaultWiederbesetzungMonate"
+          />
+        </div>
+      </div>
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          margin-top: 30px;
+          margin-left: 50px;
+          align-items: baseline;
+        "
+      >
+        <div style="width: 80%">
+          <p style="font-weight: 500; font-size: 1.275rem">
+            9. Einarbeitungszeit der Arbeitsstelle in Monaten:
+          </p>
+        </div>
+        <div style="width: 25%">
+          <input
+            style="
+              width: 100px;
+              border-radius: 35px;
+              height: 35px;
+              text-align: center;
+              background-color: rgb(252, 137, 114);
+              font-size: 20px;
+              font-weight: bold;
+              padding: 5px;
+              border: 2px solid #555;
+            "
+            type="number"
+            [(ngModel)]="einarbeitungszeitMonate"
+            (input)="callAllMethods()"
+            [defaultValue]="defaultEinarbeitungszeitMonate"
+          />
+        </div>
+      </div>
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          margin-top: 30px;
+          margin-left: 50px;
+          align-items: baseline;
+        "
+      >
+        <div style="width: 80%">
+          <p style="font-weight: 500; font-size: 1.275rem">
+            10. Wie teuer ist die Mitarbeiterrekrutierung?
+          </p>
+        </div>
+        <div style="width: 25%">
+          <div
+            style="
+              width: 100px;
+              border-radius: 35px;
+              height: 35px;
+              text-align: center;
+              background-color: rgb(252, 137, 114);
+              font-size: 20px;
+              font-weight: bold;
+              padding: 5px;
+              border: 2px solid #555;
+            "
+          >
+            <input
+              style="
+                width: 70px;
+                border: none;
+                height: 35px;
+                text-align: center;
+                background-color: rgb(252, 137, 114);
+                font-size: 20px;
+                font-weight: bold;
+              "
+              type="number"
+              [(ngModel)]="defaultNegativeKostenRekrutierungMA"
+              (input)="callAllMethods()"
+            />€
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div
+    style="
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      margin-top: 95px;
+    "
+  >
+    <div style="align-items: center; display: flex; justify-content: center">
+      <mat-card style="width: 950px; height: 1330px">
+        <div
+          style="
+            width: 100%;
+            height: 0.8rem;
+            border-radius: 2px 2px 0px 0px;
+            background-color: rgb(252, 137, 114);
+          "
+        ></div>
+        <div style="display: flex; flex-direction: row; height: 100%">
+          <div
+            style="
+              width: 70%;
+              text-align: center;
+
+              margin-top: 35px;
+            "
+          >
+            <p
+              style="
+                font-weight: 600;
+                font-size: 25px;
+                text-transform: uppercase;
+                color: rgb(252, 137, 114);
+              "
+            >
+              Kalkulation der Kosten im Detail
+            </p>
+            <p style="margin-top: 75px; font-weight: 450; font-size: 25px">
+              Gesamtkosten der Krankheitstage
+            </p>
+            <p style="margin-top: 45px; font-weight: 450; font-size: 25px">
+              Gesamtkosten der Wiederbesetzungen
+            </p>
+            <p
+              style="
+                margin-top: 85px;
+                font-weight: 450;
+                font-size: 25px;
+                color: rgb(252, 137, 114);
+              "
+            >
+              Kosten durch Krankheitstage
+            </p>
+            <p style="margin-top: 45px; font-weight: 300; font-size: 18px">
+              Gehaltskosten pro Tag
+            </p>
+            <p style="margin-top: 45px; font-weight: 300; font-size: 18px">
+              Gewinnverlust pro Tag
+            </p>
+            <p style="margin-top: 45px; font-weight: 300; font-size: 18px">
+              Kosten pro Mitarbeiter pro Jahr
+            </p>
+            <p style="margin-top: 45px; font-weight: 450; font-size: 25px">
+              Gesamtkosten der Krankheitstage
+            </p>
+            <p
+              style="
+                margin-top: 85px;
+                font-weight: 450;
+                font-size: 25px;
+                color: rgb(252, 137, 114);
+              "
+            >
+              Kosten durch Wiederbesetzungen
+            </p>
+            <p
+              style="
+                margin-top: 20px;
+
+                font-weight: 450;
+                font-size: 18px;
+                color: rgb(252, 137, 114);
+              "
+            >
+              Kündigung:
+            </p>
+            <p style="margin-top: 45px; font-weight: 300; font-size: 18px">
+              40% Effizienzverlust vor Ankündigung (~1-2 Monate vorher)
+            </p>
+            <p style="margin-top: 45px; font-weight: 300; font-size: 18px">
+              {{
+                "70% Effizienzverlust in Kündigungsfrist (" +
+                  defaultAnkuendigungKuendigungMonate +
+                  " Monat/e vorher)"
+              }}
+            </p>
+            <p
+              style="
+                margin-top: 45px;
+                font-weight: 450;
+                font-size: 18px;
+                color: rgb(252, 137, 114);
+              "
+            >
+              Rekrutierung:
+            </p>
+            <p style="margin-top: 45px; font-weight: 300; font-size: 18px">
+              {{
+                subtractionMethod() > 0
+                  ? "Fehlender Mitarbeiter für " +
+                    subtractionMethod() +
+                    " Monat/e"
+                  : "Keine Kosten durch fehlenden MA"
+              }}
+            </p>
+            <p style="margin-top: 45px; font-weight: 300; font-size: 18px">
+              {{
+                "40% Effizienz- und Zeitverlust bei Einarbeitung (" +
+                  defaultEinarbeitungszeitMonate +
+                  " Monat/e)"
+              }}
+            </p>
+            <p style="margin-top: 45px; font-weight: 300; font-size: 18px">
+              Rekrutierungskosten
+            </p>
+            <p style="margin-top: 45px; font-weight: 300; font-size: 18px">
+              Kosten pro Wiederbesetzung
+            </p>
+            <p style="margin-top: 45px; font-weight: 450; font-size: 25px">
+              Gesamtkosten der Wiederbesetzungen
+            </p>
+          </div>
+
+          <div
+            style="
+              width: 25%;
+              height: 100%;
+              border-radius: 2px 2px 0px 0px;
+              background-color: rgb(252, 137, 114);
+            "
+          >
+            <div
+              style="
+                margin-top: 130px;
+                text-align: center;
+                font-size: 20px;
+                font-weight: bold;
+              "
+            >
+              {{
+                totalEmployeeCost !== undefined ? totalEmployeeCost + " €" : ""
+              }}
+            </div>
+            <div
+              style="
+                margin-top: 45px;
+                text-align: center;
+                font-size: 20px;
+                font-weight: bold;
+              "
+            >
+              {{
+                completeCostReplacement !== undefined
+                  ? completeCostReplacement + " €"
+                  : ""
+              }}
+            </div>
+            <div
+              style="
+                margin-top: 150px;
+                text-align: center;
+                font-size: 18px;
+                font-weight: 450px;
+              "
+            >
+              {{ dailyCost !== undefined ? dailyCost + " €" : "" }}
+            </div>
+            <div
+              style="
+                margin-top: 45px;
+                text-align: center;
+                font-size: 18px;
+                font-weight: 450px;
+              "
+            >
+              {{ dailyLoss !== undefined ? dailyLoss + " €" : "" }}
+            </div>
+            <div
+              style="
+                margin-top: 45px;
+                text-align: center;
+                font-size: 18px;
+                font-weight: 450px;
+              "
+            >
+              {{ totalCost !== undefined ? totalCost + "€" : "" }}
+            </div>
+            <div
+              style="
+                margin-top: 45px;
+                text-align: center;
+                font-size: 20px;
+                font-weight: bold;
+              "
+            >
+              {{
+                totalEmployeeCost !== undefined ? totalEmployeeCost + " €" : ""
+              }}
+            </div>
+            <div
+              style="
+                margin-top: 190px;
+                text-align: center;
+                font-size: 18px;
+                font-weight: 450px;
+              "
+            >
+              {{
+                preEfficiencyLoss !== undefined ? preEfficiencyLoss + " €" : ""
+              }}
+            </div>
+            <div
+              style="
+                margin-top: 45px;
+                text-align: center;
+                font-size: 18px;
+                font-weight: 450px;
+              "
+            >
+              {{
+                postEfficiencyLoss !== undefined ? postEfficiencyLoss + "€" : ""
+              }}
+            </div>
+            <div
+              style="
+                margin-top: 110px;
+                text-align: center;
+                font-size: 18px;
+                font-weight: 450px;
+              "
+            >
+              {{
+                missingEmployeeLoss !== undefined
+                  ? missingEmployeeLoss + " €"
+                  : ""
+              }}
+            </div>
+            <div
+              style="
+                margin-top: 45px;
+                text-align: center;
+                font-size: 18px;
+                font-weight: 450px;
+              "
+            >
+              {{
+                efficiencyLossIncorporation !== undefined
+                  ? efficiencyLossIncorporation + "€"
+                  : ""
+              }}
+            </div>
+            <div
+              style="
+                margin-top: 45px;
+                text-align: center;
+                font-size: 18px;
+                font-weight: 450px;
+              "
+            >
+              {{ defaultNegativeKostenRekrutierungMA + "€" }}
+            </div>
+            <div
+              style="
+                margin-top: 45px;
+                text-align: center;
+                font-size: 18px;
+                font-weight: 450px;
+              "
+            >
+              {{
+                totalRecruitmentCost !== undefined
+                  ? totalRecruitmentCost + " €"
+                  : ""
+              }}
+            </div>
+            <div
+              style="
+                margin-top: 45px;
+                text-align: center;
+                font-size: 20px;
+                font-weight: bold;
+              "
+            >
+              {{
+                completeCostReplacement !== undefined
+                  ? completeCostReplacement + " €"
+                  : ""
+              }}
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div
+      style="
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        margin-top: 95px;
+      "
+    >
+      <div style="align-items: center; display: flex; justify-content: center">
+        <mat-card style="width: 950px; height: 500px">
+          <div
+            style="
+              width: 100%;
+              height: 0.8rem;
+              border-radius: 2px 2px 0px 0px;
+              background-color: rgb(252, 137, 114);
+            "
+          ></div>
+          <div style="display: flex; flex-direction: row; height: 100%">
+            <div
+              style="
+                width: 70%;
+                text-align: center;
+
+                margin-top: 35px;
+              "
+            >
+              <div style="display: flex; justify-content: center">
+                <p
+                  style="
+                    font-weight: 600;
+                    font-size: 25px;
+                    margin-top: 35px;
+                    text-transform: uppercase;
+                    color: rgb(252, 137, 114);
+                  "
+                >
+                  ZIELE MIT KIBUN
+                </p>
+                <img
+                  src="../../assets/kibun_icon.png"
+                  style="height: 30px; margin-left: 7px; margin-top: 30px"
+                />
+              </div>
+              <p style="margin-top: 75px; font-weight: 450; font-size: 25px">
+                {{
+                  "1. Krankheitstage um " +
+                    defaultPercentageIllness +
+                    "% reduzieren"
+                }}
+              </p>
+              <p style="margin-top: 45px; font-weight: 450; font-size: 25px">
+                und somit
+                <span style="color: rgb(44, 190, 44)">{{
+                  reduceSickDaysPercentage
+                }}</span>
+                <span style="color: rgb(44, 190, 44)">{{ " €" }}</span>
+                sparen
+              </p>
+              <p style="margin-top: 75px; font-weight: 450; font-size: 25px">
+                {{
+                  "2. Wiederbesetzungen um " +
+                    defaultPercentageReplacement +
+                    "% reduzieren"
+                }}
+              </p>
+              <p style="margin-top: 45px; font-weight: 450; font-size: 25px">
+                und somit
+                <span style="color: rgb(44, 190, 44)">{{
+                  reduceEmployeeReplacementPercentage
+                }}</span>
+                <span style="color: rgb(44, 190, 44)">{{ " €" }}</span>
+                sparen
+              </p>
+            </div>
+
+            <div
+              style="
+                width: 25%;
+                height: 100%;
+                border-radius: 2px 2px 0px 0px;
+                background-color: rgb(252, 137, 114);
+              "
+            >
+              <div
+                style="
+                  margin-top: 190px;
+                  align-items: center;
+                  font-size: 20px;
+                  font-weight: bold;
+                  justify-content: center;
+                  display: flex;
+                  flex-direction: column;
+                "
+              >
+                <div
+                  style="
+                    width: 50%;
+                    border-radius: 35px;
+                    height: 35px;
+                    text-align: center;
+                    background-color: rgb(252, 137, 114);
+                    font-size: 20px;
+                    font-weight: bold;
+                    padding: 5px;
+                    border: 2px solid black;
+                  "
+                >
+                  <input
+                    style="
+                      width: 70px;
+                      border: none;
+                      height: 35px;
+                      text-align: center;
+                      background-color: rgb(252, 137, 114);
+                      font-size: 20px;
+                      font-weight: bold;
+                    "
+                    type="number"
+                    [(ngModel)]="defaultPercentageIllness"
+                    (input)="callAllMethods()"
+                  />%
+                </div>
+                <div
+                  style="
+                    margin-top: 130px;
+                    width: 50%;
+                    border-radius: 35px;
+                    height: 35px;
+                    text-align: center;
+                    background-color: rgb(252, 137, 114);
+                    font-size: 20px;
+                    font-weight: bold;
+                    padding: 5px;
+                    border: 2px solid black;
+                  "
+                >
+                  <input
+                    style="
+                      width: 70px;
+                      border: none;
+                      height: 35px;
+                      text-align: center;
+                      background-color: rgb(252, 137, 114);
+                      font-size: 20px;
+                      font-weight: bold;
+                    "
+                    type="number"
+                    [(ngModel)]="defaultPercentageReplacement"
+                    (input)="callAllMethods()"
+                  />%
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+      <div
+        style="
+          align-items: center;
+          display: flex;
+          flex-direction: column;
+          margin-top: 95px;
+        "
+      ></div>
+    </div>
+  </div>
+</div>
